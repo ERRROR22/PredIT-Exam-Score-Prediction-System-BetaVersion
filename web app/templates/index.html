@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PredIT — Student Score Predictor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+
+  <!-- Noise texture overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <div class="logo-mark">
+      <div class="logo-shadow"></div>
+      <div class="logo-card">
+        <span class="logo-pct">%</span> PredIT
+      </div>
+    </div>
+    <span class="nav-tag">Student Score Predictor</span>
+  </nav>
+
+  <!-- ── Hero Section ── -->
+  <section class="hero">
+    <div class="hero-deco deco-1"></div>
+    <div class="hero-deco deco-2"></div>
+    <div class="hero-deco deco-3"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        ML-Powered Prediction
+        <span class="eyebrow-dot"></span>
+      </div>
+      <h1 class="hero-title">
+        Predict your<br /><em>Exam Score</em>
+      </h1>
+      <p class="hero-sub">
+        Answer a few questions about your study habits, environment, and lifestyle.
+        Our model will predict your exam performance instantly.
+      </p>
+      <div class="hero-chips">
+        <div class="chip">
+          <span class="chip-num">20</span>
+          <span class="chip-label">Features</span>
+        </div>
+        <span class="chip-sep">·</span>
+        <div class="chip">
+          <span class="chip-num">77%</span>
+          <span class="chip-label">Accuracy</span>
+        </div>
+        <span class="chip-sep">·</span>
+        <div class="chip">
+          <span class="chip-num">4</span>
+          <span class="chip-label">Steps</span>
+        </div>
+      </div>
+      <a href="#predictor" class="hero-cta">
+        Start Prediction
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Form ── -->
+  <div class="form-wrapper" id="predictor">
+    <div class="form-card">
+
+      <!-- Top bar -->
+      <div class="form-topbar">
+        <span class="step-label">Step <strong id="step-num">1</strong> of 4</span>
+        <div class="step-dots">
+          <div class="dot active" id="dot-1"></div>
+          <div class="dot" id="dot-2"></div>
+          <div class="dot" id="dot-3"></div>
+          <div class="dot" id="dot-4"></div>
+        </div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <!-- ── Step 1: Personal Info ── -->
+      <div class="f-section active" id="step-1">
+        <p class="section-eyebrow">About You</p>
+        <h2 class="section-title">Let's start with<br />the basics</h2>
+
+        <div class="qg">
+          <label class="qlabel">What is your gender?</label>
+          <div class="pills" data-field="gender">
+            <button class="pill" data-val="Male">Male</button>
+            <button class="pill" data-val="Female">Female</button>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">What type of school do you attend?</label>
+          <div class="pills" data-field="school_type">
+            <button class="pill" data-val="Public">🏫 Public School</button>
+            <button class="pill" data-val="Private">🎓 Private School</button>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">How far is your home from school?</label>
+          <div class="pills" data-field="distance_from_home">
+            <button class="pill" data-val="Near">📍 Near</button>
+            <button class="pill" data-val="Moderate">🚌 Moderate</button>
+            <button class="pill" data-val="Far">🗺️ Far</button>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">How would you describe your family's income level?</label>
+          <div class="pills" data-field="family_income">
+            <button class="pill" data-val="Low">Low</button>
+            <button class="pill" data-val="Medium">Medium</button>
+            <button class="pill" data-val="High">High</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Step 2: Study Habits ── -->
+      <div class="f-section" id="step-2">
+        <p class="section-eyebrow">Study Habits</p>
+        <h2 class="section-title">How do you<br />spend your time?</h2>
+
+        <div class="qg">
+          <label class="qlabel">
+            How many hours do you study per day?
+            <span class="vbadge" id="hours-val">5</span>
+          </label>
+          <div class="slider-wrap">
+            <input type="range" class="slider" id="hours_studied" min="1" max="10" step="1" value="5" />
+            <div class="slider-ends"><span>1 hr</span><span>10 hrs</span></div>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">
+            What is your class attendance percentage?
+            <span class="vbadge" id="attendance-val">75%</span>
+          </label>
+          <div class="slider-wrap">
+            <input type="range" class="slider" id="attendance" min="60" max="100" step="1" value="75" />
+            <div class="slider-ends"><span>60%</span><span>100%</span></div>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">
+            How many hours of sleep do you get each night?
+            <span class="vbadge" id="sleep-val">7</span>
+          </label>
+          <div class="slider-wrap">
+            <input type="range" class="slider" id="sleep_hours" min="4" max="10" step="1" value="7" />
+            <div class="slider-ends"><span>4 hrs</span><span>10 hrs</span></div>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">
+            How many tutoring sessions do you attend per month?
+            <span class="vbadge" id="tutoring-val">2</span>
+          </label>
+          <div class="slider-wrap">
+            <input type="range" class="slider" id="tutoring_sessions" min="0" max="8" step="1" value="2" />
+            <div class="slider-ends"><span>0</span><span>8</span></div>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">Do you participate in extracurricular activities?</label>
+          <div class="pills" data-field="extracurricular_activities">
+            <button class="pill" data-val="Yes">✅ Yes</button>
+            <button class="pill" data-val="No">❌ No</button>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">Do you have access to the internet at home?</label>
+          <div class="pills" data-field="internet_access">
+            <button class="pill" data-val="Yes">✅ Yes</button>
+            <button class="pill" data-val="No">❌ No</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Step 3: Academic & Health ── -->
+      <div class="f-section" id="step-3">
+        <p class="section-eyebrow">Academics & Health</p>
+        <h2 class="section-title">Your performance<br />& wellbeing</h2>
+
+        <div class="qg">
+          <label class="qlabel">
+            What was your previous exam score?
+            <span class="vbadge" id="prev-val">70</span>
+          </label>
+          <div class="slider-wrap">
+            <input type="range" class="slider" id="previous_scores" min="50" max="100" step="1" value="70" />
+            <div class="slider-ends"><span>50</span><span>100</span></div>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">
+            How many hours of physical activity do you do per week?
+            <span class="vbadge" id="physical-val">3</span>
+          </label>
+          <div class="slider-wrap">
+            <input type="range" class="slider" id="physical_activity" min="0" max="6" step="1" value="3" />
+            <div class="slider-ends"><span>0 hrs</span><span>6 hrs</span></div>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">Do you have any learning disabilities?</label>
+          <div class="pills" data-field="learning_disabilities">
+            <button class="pill" data-val="Yes">Yes</button>
+            <button class="pill" data-val="No">No</button>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">How would you describe your motivation level?</label>
+          <div class="pills" data-field="motivation_level">
+            <button class="pill" data-val="Low">😔 Low</button>
+            <button class="pill" data-val="Medium">😐 Medium</button>
+            <button class="pill" data-val="High">🔥 High</button>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">How do your peers influence your studies?</label>
+          <div class="pills" data-field="peer_influence">
+            <button class="pill" data-val="Negative">👎 Negative</button>
+            <button class="pill" data-val="Neutral">😶 Neutral</button>
+            <button class="pill" data-val="Positive">👍 Positive</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Step 4: Home Environment ── -->
+      <div class="f-section" id="step-4">
+        <p class="section-eyebrow">Home Environment</p>
+        <h2 class="section-title">Your support<br />system at home</h2>
+
+        <div class="qg">
+          <label class="qlabel">How involved are your parents in your education?</label>
+          <div class="pills" data-field="parental_involvement">
+            <button class="pill" data-val="Low">Low</button>
+            <button class="pill" data-val="Medium">Medium</button>
+            <button class="pill" data-val="High">High</button>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">What is the highest education level of your parents?</label>
+          <div class="pills" data-field="parental_education_level">
+            <button class="pill" data-val="Uneducated">None</button>
+            <button class="pill" data-val="High School">High School</button>
+            <button class="pill" data-val="College">College</button>
+            <button class="pill" data-val="Postgraduate">Postgraduate</button>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">How would you rate the quality of your teachers?</label>
+          <div class="pills" data-field="teacher_quality">
+            <button class="pill" data-val="Low">⭐ Low</button>
+            <button class="pill" data-val="Medium">⭐⭐ Medium</button>
+            <button class="pill" data-val="High">⭐⭐⭐ High</button>
+          </div>
+        </div>
+
+        <div class="qg">
+          <label class="qlabel">How accessible are learning resources at home? (books, internet, etc.)</label>
+          <div class="pills" data-field="access_to_resources">
+            <button class="pill" data-val="Low">Limited</button>
+            <button class="pill" data-val="Medium">Some</button>
+            <button class="pill" data-val="High">Plenty</button>
+          </div>
+        </div>
+
+        <button class="submit-btn" id="submit-btn">
+          <span id="btn-text">Predict My Score</span>
+          <span class="submit-arrow" id="btn-arrow">→</span>
+          <span class="spinner" id="btn-spinner" style="display:none"></span>
+        </button>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="form-nav">
+        <button class="fnav-btn" id="back-btn" style="visibility:hidden">← Back</button>
+        <button class="fnav-btn primary" id="next-btn">Next →</button>
+      </div>
+
+    </div><!-- /form-card -->
+  </div><!-- /form-wrapper -->
+
+  <!-- ── Result Modal ── -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <button class="modal-close" id="modal-close">✕</button>
+
+      <div class="modal-logo">
+        <div class="logo-mark">
+          <div class="logo-shadow sm"></div>
+          <div class="logo-card sm"><span class="logo-pct">%</span> PredIT</div>
+        </div>
+      </div>
+
+      <p class="modal-result-label">Predicted Exam Score</p>
+      <div class="score-display">
+        <span class="score-number" id="score-number">--</span>
+        <span class="score-outof">/ 100</span>
+      </div>
+      <div class="score-track">
+        <div class="score-fill" id="score-fill"></div>
+      </div>
+      <p class="score-grade" id="score-grade"></p>
+
+      <div class="modal-divider"></div>
+      <p class="modal-msg" id="modal-msg"></p>
+
+      <button class="retry-btn" id="retry-btn">↺ Try Different Values</button>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
