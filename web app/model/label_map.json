@@ -1,0 +1,17 @@
+{
+  "Low": 1,
+  "Medium": 2,
+  "High": 3,
+  "Yes": 1,
+  "No": 0,
+  "Positive": 1,
+  "Neutral": 0,
+  "Negative": -1,
+  "Uneducated": 0,
+  "High School": 1,
+  "College": 2,
+  "Postgraduate": 3,
+  "Near": 1,
+  "Moderate": 2,
+  "Far": 3
+}
